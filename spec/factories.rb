@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :category do
-    name { Faker::Book.genre }
+    sequence(:name) { |n| Faker::Book.genre + n.to_s }
     association :owner, factory: :user
   end
 
