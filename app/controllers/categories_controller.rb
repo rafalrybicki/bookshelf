@@ -29,7 +29,7 @@ class CategoriesController < ApplicationController
   def update
     respond_to do |format|
       if @category.update(category_params)
-        format.html { redirect_to category_path(@category), notice: 'Category scaffold was successfully updated.' }
+        format.html { redirect_to category_path(@category), notice: 'Category was successfully updated.' }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
@@ -39,7 +39,7 @@ class CategoriesController < ApplicationController
   def destroy
     @category.destroy
 
-    redirect_to categories_path
+    redirect_to categories_path, notice: 'Category was successfully deleted.'
   end
 
   private

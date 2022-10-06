@@ -1,5 +1,4 @@
 <h1>Categories#index</h1>
-<% @categories.each do |category| %>
-  <%= category.name %>
-  <br>
-<% end %>
+<%= render @categories %>
+<br>
+<%= link_to "Add new Category", new_category_path %>
