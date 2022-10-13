@@ -16,13 +16,13 @@ RSpec.describe Category, type: :model do
     it { is_expected.to be_valid }
   end
 
-  context 'with not valid name' do
-    it 'is not valid without a name' do
+  context 'with invalid name' do
+    it 'is invalid without a name' do
       category.name = nil
       expect(category).to_not be_valid
     end
 
-    it 'is not valid with not unique name' do
+    it 'is invalid with not unique name' do
       FactoryBot.create(:category, name: 'Horror')
       category.name = 'Horror'
 

@@ -1,4 +1,9 @@
 FactoryBot.define do
+  factory :book do
+    title { Faker::Book.title }
+    association :owner, factory: :user
+  end
+
   factory :category do
     sequence(:name) { |n| Faker::Book.genre + n.to_s }
     association :owner, factory: :user
@@ -9,7 +14,7 @@ FactoryBot.define do
     password { 'password' }
 
     factory :test_user do
-      email { 'testuser@example.com' }
+      email { 'test_user@example.com' }
     end
   end
 end
