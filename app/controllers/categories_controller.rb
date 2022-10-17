@@ -6,7 +6,9 @@ class CategoriesController < ApplicationController
     @categories = current_user.categories
   end
 
-  def show; end
+  def show
+    @books = current_user.books.where('? = ANY(books.categories)', @category.id)
+  end
 
   def new
     @category = Category.new

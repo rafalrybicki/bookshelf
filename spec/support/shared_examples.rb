@@ -13,7 +13,7 @@ end
 shared_examples 'requires owner' do |http_method, path|
   let(:expected_path) { instance_exec(&path) }
 
-  it "redirects to root page when the user is not the owner of the category" do
+  it 'redirects to root page when the user is not the owner' do
     send(http_method, expected_path)
     expect(response).to redirect_to root_path
   end

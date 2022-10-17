@@ -5,6 +5,8 @@ RSpec.describe 'Categories', type: :request do
   let(:other_user) { FactoryBot.create :user }
   let!(:user_category) { FactoryBot.create :category, owner_id: user.id }
   let(:other_user_category) { FactoryBot.create :category, owner_id: other_user.id }
+  let!(:book) { FactoryBot.create(:book, owner_id: user.id, categories: [user_category.id]) }
+  let!(:other_book) { FactoryBot.create(:book) }
   let(:valid_parameters) { { category: { name: 'category_name' } } }
   let(:invalid_parameters) { { category: { name: nil } } }
 
@@ -42,6 +44,11 @@ RSpec.describe 'Categories', type: :request do
         expect(response).to render_template(:show)
         expect(response.body).to include(user_category.name)
       end
+
+      it 'returns related books' do
+        get category_path(user_category)
+        expect(response.body).to include(book.title)
+      end
     end
   end
 
@@ -58,23 +65,23 @@ RSpec.describe 'Categories', type: :request do
   end
 
   describe 'POST #create' do
-    include_examples 'requires login', :post, -> { categories_path }
+    include_examples 'requires login', :post, -> { categories_path(valid_parameters) }
 
     context 'when logged in' do
       context 'with valid parameters' do
         it 'creates a new Category' do
           expect do
-            post '/categories', params: valid_parameters
+            post categories_path(valid_parameters)
           end.to change(Category, :count).by(1)
         end
 
         it 'redirects to the created cateogry' do
-          post '/categories', params: valid_parameters
+          post categories_path(valid_parameters)
           expect(response).to redirect_to(category_path(Category.last))
         end
 
         it "renders 'show' template" do
-          post '/categories', params: valid_parameters
+          post categories_path(valid_parameters)
           expect(response).to have_http_status(:redirect)
           follow_redirect!
           expect(response).to render_template(:show)
@@ -85,12 +92,12 @@ RSpec.describe 'Categories', type: :request do
       context 'with invalid parameters' do
         it "doesn't create a new Category" do
           expect do
-            post '/categories', params: invalid_parameters
+            post categories_path(invalid_parameters)
           end.to change(Category, :count).by(0)
         end
 
         it "renders 'new' template" do
-          post categories_path, params: invalid_parameters
+          post categories_path(invalid_parameters)
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response).to render_template(:new)
         end

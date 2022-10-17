@@ -1,6 +1,7 @@
 <h1><%= @category.name %></h1>
-<p>items will be there</p>
-
+<h2>Books:</h2>
+<%= render @books %>
+<br>
 <%= link_to "Edit", edit_category_path(@category) %>
 <br>
 <br>
