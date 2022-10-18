@@ -14,6 +14,22 @@
     <%= f.label :title %>
     <%= f.text_field :title %>
   </div>
+  <div>
+    <%= f.label :author %>
+    <%= f.text_field :author %>
+  </div>
+  <div>
+    <%= f.label :status %>
+    <%= f.select :status, Book.statuses.keys %>
+  </div>
+  <div>
+    <%= f.label :categories %>
+    <%= f.collection_check_boxes(:categories, current_user.categories, :id, :name) %>
+  </div>
+  <div>
+    <%= f.label :info %>
+    <%= f.text_field :info %>
+  </div>
   <br>
   <div>
     <%= f.submit %>

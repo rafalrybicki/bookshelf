@@ -5,19 +5,25 @@ RSpec.describe Book, type: :model do
 
   describe 'validations' do
     it { is_expected.to validate_presence_of(:title) }
+    it { is_expected.to validate_presence_of(:author) }
   end
 
   describe 'associations' do
     it { is_expected.to belong_to(:owner).class_name('User') }
   end
 
-  context 'with valid title' do
+  context 'with valid attributes' do
     it { is_expected.to be_valid }
   end
 
   context 'with invalid attributes' do
     it 'is invalid without a title' do
       book.title = nil
+      expect(book).to_not be_valid
+    end
+
+    it 'is invalid without an author' do
+      book.author = nil
       expect(book).to_not be_valid
     end
 

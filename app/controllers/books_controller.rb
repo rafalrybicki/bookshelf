@@ -1,12 +1,15 @@
 class BooksController < ApplicationController
   before_action :set_book, only: %i[show edit update destroy]
   before_action :redirect_if_not_owner_or_book_does_not_exist, only: %i[show edit update destroy]
+  before_action :reject_hidden_category, only: %i[create update]
 
   def index
     @books = current_user.books
   end
 
-  def show; end
+  def show
+    @categories = current_user.categories.where(id: @book.categories)
+  end
 
   def new
     @book = Book.new
@@ -49,10 +52,14 @@ class BooksController < ApplicationController
   end
 
   def book_params
-    params.require(:book).permit(:title, :author, :categories, :status, :info)
+    params.require(:book).permit(:title, :author, :status, :info, categories: [])
   end
 
   def redirect_if_not_owner_or_book_does_not_exist
     redirect_to root_path, status: :see_other if @book.nil?
+  end
+
+  def reject_hidden_category
+    params[:book][:categories].reject!(&:blank?) if params[:book][:categories]
   end
 end

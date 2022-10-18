@@ -1,6 +1,30 @@
 <div>
-  <p><%= @book.title %></p>
   <% if @book.author %>
-    <p><%= @book.author  %></p>
+    <p>author: <%= @book.author %></p>
+  <% end %>
+
+  <p><%= @book.title %></p>
+
+  <p>status: <%= @book.status %></p>
+
+  <% if @categories.any? %>
+    <div>
+      categories:
+      <% @categories.each do |category| %>
+        <%= link_to category.name, category %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if @book.info %>
+    <p>info: <%= @book.info %></p>
   <% end %>
 </div>
+<br>
+<%= link_to "Edit", edit_book_path(@book) %>
+<br>
+<br>
+<%= link_to "Delete", book_path(@book), data: { "turbo-method": :delete, "turbo-confirm": "Are you sure?" } %>
+<br>
+<br>
+<%= link_to "Go to books", books_path %>

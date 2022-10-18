@@ -5,8 +5,9 @@ RSpec.describe 'Books', type: :request do
   let(:other_user) { FactoryBot.create :user }
   let!(:user_book) { FactoryBot.create :book, owner_id: user.id }
   let!(:other_user_book) { FactoryBot.create :book, owner_id: other_user.id }
-  let(:valid_parameters) { { book: { title: 'Some book' } } }
-  let(:invalid_parameters) { { book: { title: nil } } }
+  let!(:user_category) { FactoryBot.create :category, owner_id: user.id }
+  let(:valid_parameters) { { book: { title: 'Some title', author: 'Some Author' } } }
+  let(:invalid_parameters) { { book: { title: nil, author: nil } } }
 
   before do
     sign_in user
@@ -17,7 +18,6 @@ RSpec.describe 'Books', type: :request do
 
     context 'when logged in' do
       before(:example) { get books_path }
-
       it { expect(response).to have_http_status(:success) }
 
       it { expect(response).to render_template(:index) }
@@ -80,6 +80,11 @@ RSpec.describe 'Books', type: :request do
 
         it {
           follow_redirect!
+          expect(response.body).to include(Book.last.author)
+        }
+
+        it {
+          follow_redirect!
           expect(response.body).to include(Book.last.title)
         }
       end
@@ -93,13 +98,9 @@ RSpec.describe 'Books', type: :request do
           end.to change(Book, :count).by(0)
         }
 
-        it {
-          expect(response).to have_http_status(:unprocessable_entity)
-        }
+        it { expect(response).to have_http_status(:unprocessable_entity) }
 
-        it {
-          expect(response).to render_template(:new)
-        }
+        it { expect(response).to render_template(:new) }
       end
     end
   end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'destory category', type: :system do
+RSpec.describe 'destroy category', type: :system do
   let!(:user) { FactoryBot.create(:test_user) }
   let!(:category1) { FactoryBot.create(:category, owner_id: user.id) }
   let!(:category2) { FactoryBot.create(:category, owner_id: user.id) }
