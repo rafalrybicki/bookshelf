@@ -8,6 +8,8 @@ class CategoriesController < ApplicationController
 
   def show
     @books = current_user.books.where('? = ANY(books.categories)', @category.id)
+    @categories = {}
+    current_user.categories.each { |cateogry| @categories[cateogry.id] = cateogry }
   end
 
   def new

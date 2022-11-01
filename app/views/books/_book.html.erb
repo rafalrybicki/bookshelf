@@ -1,4 +1,12 @@
-<div>
-  <%= link_to book.title, book %>
-</div>
-<br>
+<tr>
+  <td><%= link_to book.title, book %></td>
+  <td><%= book.author %></td>
+  <td><%= book.status %></td>
+  <td>
+    <% if @categories&.any? %>
+      <% book.categories.each do |category_id| %>
+        <%= link_to @categories[category_id].name, category_path(category_id) %>
+      <% end %>
+    <% end %>
+  </td>
+</tr>

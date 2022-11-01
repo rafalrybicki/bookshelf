@@ -5,6 +5,8 @@ class BooksController < ApplicationController
 
   def index
     @books = current_user.books
+    @categories = {}
+    current_user.categories.each { |cateogry| @categories[cateogry.id] = cateogry }
   end
 
   def show
