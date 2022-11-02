@@ -1,4 +1,6 @@
-<h1><%= @category.name %></h1>
+<h1>
+  You have <%= @books.size %> <%= @category.name %> books
+</h1>
 <%= render 'books' %>
 <br>
 <%= link_to "Edit", edit_category_path(@category) %>

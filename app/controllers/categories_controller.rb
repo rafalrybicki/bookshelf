@@ -3,13 +3,13 @@ class CategoriesController < ApplicationController
   before_action :redirect_if_not_owner_or_category_does_not_exist, only: %i[show edit update destroy]
 
   def index
-    @categories = current_user.categories
+    @categories = Category.with_books(current_user)
   end
 
   def show
     @books = current_user.books.where('? = ANY(books.categories)', @category.id)
     @categories = {}
-    current_user.categories.each { |cateogry| @categories[cateogry.id] = cateogry }
+    current_user.categories.each { |category| @categories[category.id] = category }
   end
 
   def new
