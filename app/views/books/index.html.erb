@@ -1,3 +1,7 @@
 <h1>You have <%= current_user.books.count %> books</h1>
+<br>
+<%== pagy_nav(@pagy) %>
+<br>
 <%= render 'books' %>
+<br>
 <%= link_to "Add new Book", new_book_path %>

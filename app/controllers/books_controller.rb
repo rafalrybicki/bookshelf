@@ -4,7 +4,7 @@ class BooksController < ApplicationController
   before_action :reject_hidden_category, only: %i[create update]
 
   def index
-    @books = current_user.books
+    @pagy, @books = pagy(current_user.books, items: 30)
     @categories = {}
     current_user.categories.each { |cateogry| @categories[cateogry.id] = cateogry }
   end

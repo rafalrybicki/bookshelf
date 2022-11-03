@@ -50,6 +50,8 @@ gem 'bootsnap', require: false
 
 gem 'devise'
 
+gem 'pagy'
+
 group :test do
   gem 'shoulda-matchers'
 end
