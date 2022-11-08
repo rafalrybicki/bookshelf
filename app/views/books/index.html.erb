@@ -1,4 +1,6 @@
 <h1>You have <%= current_user.books.count %> books</h1>
+<%= render 'search_form' %>
+<%#= debugger %>
 <br>
 <%== pagy_nav(@pagy) %>
 <br>

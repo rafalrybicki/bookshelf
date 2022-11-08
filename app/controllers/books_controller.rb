@@ -4,9 +4,11 @@ class BooksController < ApplicationController
   before_action :reject_hidden_category, only: %i[create update]
 
   def index
-    @pagy, @books = pagy(current_user.books, items: 30)
     @categories = {}
     current_user.categories.each { |cateogry| @categories[cateogry.id] = cateogry }
+
+    @books = books
+    @pagy, @books = pagy(@books, items: 30)
   end
 
   def show
@@ -63,5 +65,31 @@ class BooksController < ApplicationController
 
   def reject_hidden_category
     params[:book][:categories].reject!(&:blank?) if params[:book][:categories]
+  end
+
+  def books
+    books = current_user.books
+    title = params[:title]
+    author = params[:author]
+    status = params[:status]
+    categories = params[:categories]&.reject!(&:blank?)
+
+    if title && title != ''
+      title = Book.sanitize_sql_like(params[:title])
+      books = books.where("LOWER(title) LIKE LOWER('%#{title}%')")
+    end
+
+    if author && author != ''
+      author = Book.sanitize_sql_like(params[:author])
+      books = books.where("LOWER(author) LIKE LOWER('%#{author}%')")
+    end
+
+    books = books.where('status = ?', status) if status && status != ''
+
+    categories&.each do |category|
+      books = books.where('? = ANY(categories)', category)
+    end
+
+    books
   end
 end

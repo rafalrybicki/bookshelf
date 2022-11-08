@@ -1,0 +1,23 @@
+<%= form_with url: "/books", method: :get do |f| %>
+  <div>
+    <%= f.label :title %>
+    <%= f.search_field :title, value: params[:title] %>
+  </div>
+  <br>
+  <div>
+    <%= f.label :author %>
+    <%= f.search_field :author, value: params[:author] %>
+  </div>
+  <br>
+  <div>
+    <%= f.label :status %>
+    <%= f.select :status, [['any', '']] + Book.statuses.to_a, selected: params[:status] %>
+  </div>
+  <br>
+  <div>
+    <%= f.label :categories %>
+    <%= f.collection_check_boxes :categories, current_user.categories, :id, :name, checked: params[:categories] %>
+  </div>
+  <br>
+  <%= f.submit 'Search' %>
+<% end %>
