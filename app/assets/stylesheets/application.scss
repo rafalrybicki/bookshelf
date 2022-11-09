@@ -1,0 +1,23 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    color: blue;
+  }
+}
+
+.container {
+  max-width: max-content;
+  margin: 0 auto;
+}
+
+@import "components/*";
