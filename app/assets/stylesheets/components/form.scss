@@ -1,0 +1,22 @@
+form {
+  margin: 10px 20px 10px 0;
+
+  .form-group {
+    margin-bottom: 10px;
+    display: flex;
+
+    >label:first-child {
+      width: 80px;
+    }
+  }
+
+  .categories {
+    div {
+      margin: 5px 0 5px 80px;
+
+      label {
+        margin: 0 15px 0 5px;
+      }
+    }
+  }
+}

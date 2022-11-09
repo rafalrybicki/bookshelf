@@ -1,9 +1,9 @@
-<h1>You have <%= current_user.books.count %> books</h1>
-<%= render 'search_form' %>
-<%#= debugger %>
-<br>
-<%== pagy_nav(@pagy) %>
-<br>
-<%= render 'books' %>
-<br>
-<%= link_to "Add new Book", new_book_path %>
+<h1>You have <%= @books.count %> books</h1>
+<div class="books">
+  <%= render 'search_form' %>
+  <div>
+    <%= render 'books', books: @batch_of_books %>
+    <%== pagy_nav(@pagy) %>
+    <%= link_to "Add new Book", new_book_path %>
+  </div>
+</div>

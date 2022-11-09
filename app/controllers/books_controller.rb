@@ -8,7 +8,7 @@ class BooksController < ApplicationController
     current_user.categories.each { |cateogry| @categories[cateogry.id] = cateogry }
 
     @books = books
-    @pagy, @books = pagy(@books, items: 30)
+    @pagy, @batch_of_books = pagy(@books, items: 30)
   end
 
   def show

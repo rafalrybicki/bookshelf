@@ -1,23 +1,29 @@
-<%= form_with url: "/books", method: :get do |f| %>
-  <div>
+<%= form_with url: "/books", method: :get, class: "search-form" do |f| %>
+  <div class="form-group">
     <%= f.label :title %>
     <%= f.search_field :title, value: params[:title] %>
   </div>
-  <br>
-  <div>
+
+  <div class="form-group">
     <%= f.label :author %>
     <%= f.search_field :author, value: params[:author] %>
   </div>
-  <br>
-  <div>
+
+  <div class="form-group">
     <%= f.label :status %>
     <%= f.select :status, [['any', '']] + Book.statuses.to_a, selected: params[:status] %>
   </div>
-  <br>
-  <div>
-    <%= f.label :categories %>
-    <%= f.collection_check_boxes :categories, current_user.categories, :id, :name, checked: params[:categories] %>
+
+  <%= f.label :categories %>
+
+  <div class="categories">
+    <%= f.collection_check_boxes :categories, current_user.categories, :id, :name, checked: params[:categories] do |b| %>
+      <div>
+        <%= b.check_box %>
+        <%= b.label { b.text} %>
+      </div>
+    <% end %>
   </div>
-  <br>
+
   <%= f.submit 'Search' %>
 <% end %>
