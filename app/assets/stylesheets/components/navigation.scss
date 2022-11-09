@@ -3,12 +3,16 @@ nav {
 
   ul {
     list-style: none;
-    max-width: max-content;
-    margin-left: auto;
+    display: flex;
 
     li {
       display: inline-block;
       margin-left: 10px;
+      font-size: 17px;
+
+      &:first-of-type {
+        margin-right: auto;
+      }
     }
   }
 }

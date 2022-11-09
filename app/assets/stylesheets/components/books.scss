@@ -1,3 +1,9 @@
 .books {
   display: flex;
+
+  table {
+    td {
+      padding: 0 10px;
+    }
+  }
 }

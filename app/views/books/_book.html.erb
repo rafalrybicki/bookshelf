@@ -5,7 +5,12 @@
   <td>
     <% if @categories&.any? %>
       <% book.categories.each do |category_id| %>
-        <%= link_to @categories[category_id].name, category_path(category_id) %>
+        <% if @categories[category_id] %>
+          <%= link_to @categories[category_id].name, category_path(category_id) %>
+          <% if category_id != book.categories.last %>
+            &bull;
+          <% end %>
+        <% end %>
       <% end %>
     <% end %>
   </td>

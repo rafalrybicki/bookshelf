@@ -6,6 +6,8 @@ class Book < ApplicationRecord
 
   enum status: { "idea": 0, "to read": 1, "read": 2, "to buy": 3 }
 
+  default_scope { order(:title) }
+
   private
 
   def validate_categories
