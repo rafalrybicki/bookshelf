@@ -4,7 +4,7 @@ class Book < ApplicationRecord
   validates :title, :author, presence: true
   validate :validate_categories
 
-  enum status: { "idea": 0, "to read": 1, "read": 2, "to buy": 3 }
+  enum status: { "idea": 0, "to read": 1, "read": 2, "to buy": 3, "special": 4 }
 
   default_scope { order(:title) }
 
