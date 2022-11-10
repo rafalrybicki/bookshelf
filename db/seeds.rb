@@ -11,7 +11,7 @@ user = User.create!(email: 'user@example.com', password: 'password')
   Book.create!(title: Faker::Book.title,
                author: Faker::Book.author,
                categories: [1, 6],
-               tatus: rand(0..3),
+               status: rand(0..3),
                owner: user)
   Book.create!(title: Faker::Book.title,
                author: Faker::Book.author,

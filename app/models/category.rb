@@ -20,4 +20,11 @@ class Category < ApplicationRecord
                           categories.name
                       ', user_id])
                      }
+
+  before_destroy do |category|
+    books = User.find(category.owner_id).books.where('? = ANY(books.categories)', category.id)
+    books.each do |book|
+      book.update!(categories: book.categories.reject { |id| id == category.id })
+    end
+  end
 end
